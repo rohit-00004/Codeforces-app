@@ -1,0 +1,77 @@
+{
+    "status": "OK",
+    "result": [
+        {
+            "id": 166530403,
+            "contestId": 1714,
+            "creationTimeSeconds": 1659366099,
+            "relativeTimeSeconds": 1599,
+            "problem": {
+                "contestId": 1714,
+                "index": "F",
+                "name": "Build a Tree and That Is It",
+                "type": "PROGRAMMING",
+                "tags": [
+                    "brute force",
+                    "constructive algorithms",
+                    "greedy",
+                    "implementation",
+                    "trees"
+                ]
+            },
+            "author": {
+                "contestId": 1714,
+                "members": [
+                    {
+                        "handle": "tourist"
+                    }
+                ],
+                "participantType": "OUT_OF_COMPETITION",
+                "ghost": false,
+                "startTimeSeconds": 1659364500
+            },
+            "programmingLanguage": "GNU C++20 (64)",
+            "verdict": "OK",
+            "testset": "TESTS",
+            "passedTestCount": 51,
+            "timeConsumedMillis": 46,
+            "memoryConsumedBytes": 819200
+        },
+        {
+            "id": 166525077,
+            "contestId": 1714,
+            "creationTimeSeconds": 1659365811,
+            "relativeTimeSeconds": 1311,
+            "problem": {
+                "contestId": 1714,
+                "index": "G",
+                "name": "Path Prefixes",
+                "type": "PROGRAMMING",
+                "tags": [
+                    "binary search",
+                    "data structures",
+                    "dfs and similar",
+                    "implementation",
+                    "trees"
+                ]
+            },
+            "author": {
+                "contestId": 1714,
+                "members": [
+                    {
+                        "handle": "tourist"
+                    }
+                ],
+                "participantType": "OUT_OF_COMPETITION",
+                "ghost": false,
+                "startTimeSeconds": 1659364500
+            },
+            "programmingLanguage": "GNU C++20 (64)",
+            "verdict": "OK",
+            "testset": "TESTS",
+            "passedTestCount": 20,
+            "timeConsumedMillis": 155,
+            "memoryConsumedBytes": 44032000
+        }
+    ]
+}
