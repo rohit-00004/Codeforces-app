@@ -39,6 +39,7 @@ dependencies:
   pie_chart: ^5.3.2
   intl: ^0.17.0
   animated_text_kit: ^4.2.2
+  url_launcher: ^6.1.5
 
 dev_dependencies:
   flutter_test:

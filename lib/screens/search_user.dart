@@ -11,7 +11,7 @@ class SearchUser extends StatefulWidget {
 
 class _SearchUserState extends State<SearchUser> {
   final TextEditingController _handlecontroller = TextEditingController();
-  bool show = false;
+  bool show = false, show2 = true;
   @override
   Widget build(BuildContext context) {
     var sz = MediaQuery.of(context).size;
@@ -30,6 +30,7 @@ class _SearchUserState extends State<SearchUser> {
                   height: sz.height * .1,
                   child: Row(
                     children: [
+                      show2 == false ? Container() :
                       AnimatedTextKit(
                         animatedTexts: [
                           TypewriterAnimatedText(
@@ -48,7 +49,7 @@ class _SearchUserState extends State<SearchUser> {
                         // pause: const Duration(milliseconds: 1000),
                         totalRepeatCount: 1,
                         onFinished: () async{
-                          await Future.delayed(const Duration(microseconds: 10));
+                          await Future.delayed(const Duration(milliseconds: 30));
                           show = true;
                           setState(() {});
                         },
@@ -71,6 +72,7 @@ class _SearchUserState extends State<SearchUser> {
                         onFinished: (){
                           setState(() {
                             show = false;
+                            show2 = false;
                           });
                         },
                       ),
@@ -90,7 +92,7 @@ class _SearchUserState extends State<SearchUser> {
                 width: sz.width * .7,
                 child: TextField(
                   controller: _handlecontroller,
-                  cursorColor: Colors.purple,
+                  cursorColor: Colors.white,
                   style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
@@ -126,12 +128,12 @@ class _SearchUserState extends State<SearchUser> {
       ),
     );
   }
-
+  
   RotateAnimatedText animatedText(String s) {
     return RotateAnimatedText(
       s,
       textStyle: const TextStyle(
-        fontSize: 60.0,
+        fontSize: 50.0,
         fontFamily: 'Canterbury',
         fontWeight: FontWeight.bold,
         color: Colors.white,

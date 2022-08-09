@@ -59,7 +59,9 @@ class _ProblemTagsState extends State<ProblemTags> {
         } 
         else if (apidata.hasError) {
           return Center(
-            child: Text(apidata.error.toString()),
+            child: Text(apidata.error.toString(),
+            style: const TextStyle(color: Colors.white, fontSize: 18),
+            ),
           );
         }
         return Center(
@@ -86,8 +88,7 @@ class SortaccToTags extends StatelessWidget {
 
   Map<String, int> uniquetags = {};
   LinkedHashMap sortedMap = LinkedHashMap();
-
-
+  
   void makeMap() {
     Set<String> st = {};
 
@@ -125,13 +126,15 @@ class SortaccToTags extends StatelessWidget {
               // physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               children: [
+                // Container(height: 100, color: Colors.red,),
+
                 MyPieChart(sortedTags: uniquetags,),
 
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxHeight: 100),
                   child: ListView.builder(                       // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ TO DO $$$$$$$$$$$$$$$
                           scrollDirection: Axis.horizontal,        
-                              physics: const BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           // physics: const NeverScrollableScrollPhysics(), 
                           // primary: false,
                           shrinkWrap: true,

@@ -1,7 +1,7 @@
 
 class Contest{
   final int id, durationSeconds, startTimeSeconds;
-  final String name, phase;
+  final String name, phase, websiteUrl;
 
   Contest({
     required this.id,
@@ -9,6 +9,7 @@ class Contest{
     required this.startTimeSeconds,
     required this.name,
     required this.phase,
+    required this.websiteUrl,
   });
 
   factory Contest.fromJson(Map<String, dynamic> json){
@@ -17,6 +18,7 @@ class Contest{
     startTimeSeconds: json['startTimeSeconds'], 
     name: json['name'],
     phase: json['phase'],
+    websiteUrl: json['websiteUrl'] ?? '',
     );
   }
 }

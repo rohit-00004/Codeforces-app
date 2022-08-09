@@ -27,6 +27,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     var sz = MediaQuery.of(context).size;
     return Scaffold(
+
         appBar: AppBar(
           title: Row(children: [
             const Expanded(
@@ -46,9 +47,7 @@ class _HomeState extends State<Home> {
             index: bottomIdx,
             height: 60,
             animationDuration: const Duration(milliseconds: 300),
-          backgroundColor: const Color(0xff20124d),
-           
-            // buttonBackgroundColor: Colors.red,
+            backgroundColor: bottomIdx == 1 || bottomIdx == 2 ? const Color.fromARGB(255, 21, 132, 132) :const Color(0xff20124d),
             
             onTap: (value) {
               // Respond to item press.

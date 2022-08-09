@@ -4,6 +4,7 @@ import 'package:codeforces_vis/models/contest.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Future<List<Contest>> fetchcontestList() async {
   String url = "https://codeforces.com/api/contest.list?";
@@ -39,10 +40,11 @@ class _UpcomingContestsState extends State<UpcomingContests> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 21, 132, 132),
       appBar: AppBar(
         title: const Text('Upcoming Contests', ),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 5, 127, 226),
+        backgroundColor: const Color.fromARGB(255, 15, 95, 95),
       ),
       body: FutureBuilder<List<Contest>>(
         future: contests,
@@ -83,7 +85,6 @@ class ShowList extends StatelessWidget {
     }
     upcomingOnly.sort((a, b) => a.startTimeSeconds.compareTo(b.startTimeSeconds));
   }
-
   @override
   Widget build(BuildContext context) {
     filterContests();
@@ -105,6 +106,7 @@ class ShowList extends StatelessWidget {
                   child: ListTile(
                     // isThreeLine: true,
                     title: Text(upcomingOnly[index].name, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800),),
+                    subtitle: Text(allContests[index].websiteUrl),
                     trailing: Text(
                       DateFormat('EEEE d MMM hh:mm:ss')
                       .format(

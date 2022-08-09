@@ -1,6 +1,6 @@
 class Cfuser{
   late int rating, maxrating, friends, contribution;
-  late String handle, rank, maxrank, avatar;
+  late String handle, rank, maxrank, avatar, country;
   late int usid;
 
   Cfuser({
@@ -12,6 +12,7 @@ class Cfuser{
     required this.maxrating,
     required this.contribution, 
     required this.avatar, 
+    required this.country, 
   });
     
   factory Cfuser.fromJson(Map<String, dynamic> json) {
@@ -24,6 +25,7 @@ class Cfuser{
       maxrating: json['maxRating'],
       contribution: json['contribution'],
       avatar: json['titlePhoto'],
+      country: json['country'] ?? '',
     );
   }
 }
@@ -54,19 +56,6 @@ class Problem {
     );
   }
 }
-
-
-const Map<String, String> alternateNames = {
-  "COMPILATION_ERROR": "COMP_ERR",
-  "RUNTIME_ERROR": "RUN_ERR",
-  "WRONG_ANSWER": "WRG_ANS",
-  "PRESENTATION_ERROR": "PST_ERR",
-  "TIME_LIMIT_EXCEEDED": "TLE",
-  "MEMORY_LIMIT_EXCEEDED": "MLE",
-  "IDLENESS_LIMIT_EXCEEDED": "ILE",
-  "SECURITY_VIOLATED": "SEC_VIOL",
-  "INPUT_PREPARATION_CRASHED": "IPC"
-};
 
 
 class Submission{

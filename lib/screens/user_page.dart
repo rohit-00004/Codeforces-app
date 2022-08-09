@@ -48,7 +48,7 @@ class _ShowUserState extends State<ShowUser> {
                 );
               } else if (snapshot.hasError) {
                 return Center(
-                  child: Text('${snapshot.error}'),
+                  child: Text('${snapshot.error}', style: const TextStyle(color: Colors.white, fontSize: 18),),
                 );
               }
 
@@ -56,7 +56,6 @@ class _ShowUserState extends State<ShowUser> {
             },
           ),
           ProblemTags(handle: widget.handle),
-          
         ],
       ),
     );
@@ -87,7 +86,7 @@ class _UserDetailsState extends State<UserDetails> {
   Color choosecolor(String rank) {
     if (rank == "newbie") return const Color(0xff808185);
     if (rank == "pupil") {
-      return const Color(0xff808080);
+      return const Color(0xff008000);
     }
     if (rank == "specialist") {
       return const Color(0xff03a89e);
@@ -125,11 +124,6 @@ class _UserDetailsState extends State<UserDetails> {
           height: sz.height * .25,
           width: sz.width,
           margin: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.black,
-            ),
-          ),
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -187,7 +181,7 @@ class _UserDetailsState extends State<UserDetails> {
                                 Text(
                                   '${widget.maxrank}, ${widget.maxrating}',
                                   style: TextStyle(
-                                      color: choosecolor(widget.rank),
+                                      color: choosecolor(widget.maxrank),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600),
                                 ),
