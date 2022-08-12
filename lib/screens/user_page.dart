@@ -27,7 +27,7 @@ class _ShowUserState extends State<ShowUser> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 29, 109, 149),
       appBar: AppBar(
-        title: Text('Codeforces user ${widget.handle}'),
+        title: Text(widget.handle, overflow: TextOverflow.ellipsis,),
         backgroundColor: const Color.fromARGB(255, 15, 70, 97),
       ),
       body: Column(
@@ -131,50 +131,62 @@ class _UserDetailsState extends State<UserDetails> {
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(children: [
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  widget.rank[0] == 'l'
+                    ? Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Row(
+                          children: [
+                            Text(
+                              tmp1,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              tmp2,
+                              style: const TextStyle(
+                                color: Colors.red,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                    )
+                    : Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(
+                          widget.handle,
+                          style: TextStyle(
+                              color: choosecolor(widget.rank),
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold),
+                        ),
+                    ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    widget.rank,
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: choosecolor(widget.rank),
+                        fontWeight: FontWeight.w800),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 8),
                   child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            widget.rank[0] == 'l'
-                                ? Row(
-                                    children: [
-                                      Text(
-                                        tmp1,
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        tmp2,
-                                        style: const TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                : Text(
-                                    widget.handle,
-                                    style: TextStyle(
-                                        color: choosecolor(widget.rank),
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                            Text(
-                              widget.rank,
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: choosecolor(widget.rank),
-                                  fontWeight: FontWeight.w800),
-                            ),
+                            
                             Row(
                               children: [
                                 const Text('(max.'),
@@ -227,11 +239,11 @@ class _UserDetailsState extends State<UserDetails> {
                             ),
                           ],
                         ),
-                        Expanded(
+                          Expanded(
                           child: SizedBox(
-                            height: sz.height * .2,
+                            height: sz.height * .15,
                             child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
+                                borderRadius: BorderRadius.circular(20.0),
                                 child: Image.network(
                                   widget.avatar,
                                 )),

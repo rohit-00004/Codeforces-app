@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:codeforces_vis/models/user_model.dart';
 import 'package:codeforces_vis/screens/user_page.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 
 class ActiveUsers extends StatefulWidget {
@@ -14,7 +15,8 @@ class ActiveUsers extends StatefulWidget {
 
 class _ActiveUsersState extends State<ActiveUsers> {
   Future<List<Cfuser>> fetchUserslist() async {
-    String uri = "https://codeforces.com/api/user.ratedList?activeOnly=true";
+    String uri =
+        "https://codeforces.com/api/user.ratedList?activeOnly=true&includeRetired=true";
     var response = await http.get(Uri.parse(uri));
 
     if (response.statusCode == 200) {
@@ -56,6 +58,7 @@ class _ActiveUsersState extends State<ActiveUsers> {
   }
 }
 
+// ignore: must_be_immutable
 class ActiveUsersList extends StatefulWidget {
   List<Cfuser> users;
   ActiveUsersList({Key? key, required this.users}) : super(key: key);
@@ -65,11 +68,10 @@ class ActiveUsersList extends StatefulWidget {
 }
 
 class _ActiveUsersListState extends State<ActiveUsersList> {
-  void sortUsers() {
-    widget.users.sort(((a, b) => b.rating.compareTo(a.rating)));
-  }
-
+  // GlobalKey<_ActiveUsersListState> _myKey = GlobalKey();
+  
   late List<Cfuser> origList;
+  Set<String> selectedHandles = {};
 
   @override
   void initState() {
@@ -77,6 +79,9 @@ class _ActiveUsersListState extends State<ActiveUsersList> {
 
     origList = widget.users;
   }
+
+  void sortUsers() =>
+      widget.users.sort(((a, b) => b.rating.compareTo(a.rating)));
 
   Color choosecolor(String rank) {
     if (rank == "newbie") return const Color(0xff808185);
@@ -111,31 +116,42 @@ class _ActiveUsersListState extends State<ActiveUsersList> {
   void searchresult(String query) {
     String input = query.trim();
 
-    // widget.users.map((user) {
-    //   print(user);
-    //   String userHere = user.handle;
-    //   String countryHere = user.country;
-    //   // print(userHere);
-    //   if(userHere == input || countryHere == input || input.isEmpty){
-    //     searchedUsers.add(user);
-    //   }
-    // });
-
     setState(() {
-      // widget.users = searchedUsers;
       if (input.isEmpty) {
         widget.users = origList;
       } else {
         List<Cfuser> newlist;
-        newlist = widget.users
-            .where((item) =>
-                item.handle.contains(input) ||
-                item.country.contains(input) ||
-                input.isEmpty)
-            .toList();
+        input = input.toLowerCase();
+
+        newlist = widget.users.where((element) {
+          String nameHere = element.handle.toLowerCase();
+          String countryHere = element.country.toLowerCase();
+
+          return nameHere.contains(input) || countryHere.contains(input);
+        }).toList();
+
         widget.users = newlist;
       }
     });
+  }
+
+  void addToFavorites(Cfuser user) {
+
+    final userHere = Cfuser(
+      rating: user.rating, 
+      friends: user.friends,
+      maxrating: user.maxrating,
+      contribution: user.contribution,
+      handle: user.handle,
+      rank: user.rank,
+      maxrank: user.maxrank,
+      avatar: user.avatar,
+      country: user.country
+    );
+
+    final box = Hive.box<Cfuser>('FavoritesList');
+    box.add(userHere);
+
   }
 
   @override
@@ -147,7 +163,7 @@ class _ActiveUsersListState extends State<ActiveUsersList> {
         Container(
           margin: EdgeInsets.only(
               left: sz.width * .1, right: sz.width * .1, top: sz.width * .05),
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
           height: sz.height * .1,
           decoration: BoxDecoration(
             border: Border.all(
@@ -229,12 +245,51 @@ class _ActiveUsersListState extends State<ActiveUsersList> {
                             ),
                           ],
                         ),
-                  trailing: Text(
-                    widget.users[index].rating.toString(),
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: choosecolor(widget.users[index].rank),
+                  trailing: SizedBox(
+                    width: 100,
+
+                    // decoration: BoxDecoration(
+                    //   border: Border.all(color: Colors.black)
+                    // ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            widget.users[index].rating.toString(),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: choosecolor(widget.users[index].rank),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                            child: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    if (selectedHandles
+                                        .contains(widget.users[index].handle)) {
+                                      selectedHandles
+                                          .remove(widget.users[index].handle);
+                                    } else {
+                                      selectedHandles
+                                          .add(widget.users[index].handle);
+                                    }
+                                    if(selectedHandles.contains(widget.users[index].handle) == true){
+                                      addToFavorites(widget.users[index]);
+                                    }
+                                  });
+                                },
+                                icon: selectedHandles
+                                        .contains(widget.users[index].handle)
+                                    ? Icon(
+                                        Icons.favorite,
+                                        color: Colors.amber[900],
+                                      )
+                                    : const Icon(
+                                        Icons.favorite_outline,
+                                      )))
+                      ],
                     ),
                   ),
                 );

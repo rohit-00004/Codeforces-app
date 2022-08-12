@@ -4,7 +4,6 @@ import 'package:codeforces_vis/models/contest.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 Future<List<Contest>> fetchcontestList() async {
   String url = "https://codeforces.com/api/contest.list?";
@@ -94,44 +93,47 @@ class ShowList extends StatelessWidget {
         children: [
           SizedBox(height: sz.height*.03,),
     
-          ListView.separated(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-              itemCount: upcomingOnly.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  color: index % 2 == 0 ? const Color.fromARGB(255, 230, 193, 97) : const Color.fromARGB(255, 58, 202, 173),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  elevation: 10,
-                  child: ListTile(
-                    // isThreeLine: true,
-                    title: Text(upcomingOnly[index].name, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800),),
-                    subtitle: Text(allContests[index].websiteUrl),
-                    trailing: Text(
-                      DateFormat('EEEE d MMM hh:mm:ss')
-                      .format(
-                        DateTime.fromMillisecondsSinceEpoch(
-                          upcomingOnly[index].startTimeSeconds * 1000)
-                    )
-                      .toString(), 
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)
+          Container(
+            margin:const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+            child: ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+                itemCount: upcomingOnly.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    color: index % 2 == 0 ? const Color.fromARGB(255, 230, 193, 97) : const Color.fromARGB(255, 58, 202, 173),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    elevation: 10,
+                    child: ListTile(
+                      // isThreeLine: true,
+                      title: Text(upcomingOnly[index].name, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800),),
+                      subtitle: Text(allContests[index].websiteUrl),
+                      trailing: Text(
+                        DateFormat('EEEE d MMM hh:mm:ss')
+                        .format(
+                          DateTime.fromMillisecondsSinceEpoch(
+                            upcomingOnly[index].startTimeSeconds * 1000)
+                      )
+                        .toString(), 
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)
+                      ),
+                      visualDensity: const VisualDensity(vertical: 4),
+                      // leading: CircleAvatar(
+                      //   child: Text(upcomingOnly[index].id.toString()),
+                      // ),
                     ),
-                    visualDensity: const VisualDensity(vertical: 4),
-                    // leading: CircleAvatar(
-                    //   child: Text(upcomingOnly[index].id.toString()),
-                    // ),
-                  ),
-                );
-              },
-              separatorBuilder: (context, index) {
-                return const Divider(
-                  color: Colors.blueGrey,
-                  thickness: 2,
-                  indent: 50,
-                  endIndent: 50,
-                );
-              },
-            ),
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return const Divider(
+                    color: Colors.blueGrey,
+                    thickness: 2,
+                    indent: 50,
+                    endIndent: 50,
+                  );
+                },
+              ),
+          ),
         ],
       ),
     );

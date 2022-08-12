@@ -58,14 +58,16 @@ class _HomeState extends State<Home> {
             },
             items: const[
               Icon(Icons.home_outlined),
-              // Icon(Icons.favorite),
               Icon(Icons.upcoming_outlined),
               Icon(Icons.people_outline),
               // Icon(Icons.question_answer_rounded),
-              Icon(Icons.compare_arrows),
+              Icon(Icons.favorite_outline),
             ],
          ),  
-        body: screens[bottomIdx],
+        body: IndexedStack(  
+          index: bottomIdx,
+          children: screens,
+         ),
             
         
         );

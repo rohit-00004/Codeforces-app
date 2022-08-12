@@ -1,7 +1,28 @@
-class Cfuser{
-  late int rating, maxrating, friends, contribution;
-  late String handle, rank, maxrank, avatar, country;
-  late int usid;
+import 'package:hive/hive.dart';
+
+part 'user_model.g.dart';
+
+@HiveType(typeId: 0)
+class Cfuser extends HiveObject{
+  @HiveField(0)
+  late int rating;
+  @HiveField(1)  
+  late int maxrating;
+  @HiveField(2)
+  late int friends;
+  @HiveField(3)
+  late int contribution;
+
+  @HiveField(4)
+  late String handle;
+  @HiveField(5)  
+  late String rank;
+  @HiveField(6)  
+  late String maxrank;
+  @HiveField(7)  
+  late String avatar;
+  @HiveField(8)  
+  late String country;
 
   Cfuser({
     required this.handle,
@@ -26,57 +47,6 @@ class Cfuser{
       contribution: json['contribution'],
       avatar: json['titlePhoto'],
       country: json['country'] ?? '',
-    );
-  }
-}
-
-
-// problems solved
-class Problem {
-  late int contestId, rating;
-  late String index, name;
-  late List<dynamic> tags;
-  
-  Problem({
-    required this.contestId,
-    required this.index,
-    required this.name,
-    required this.tags,
-    required this.rating,
-  });
-  
-             
-  factory Problem.fromJson(Map<String, dynamic> json) {
-    return Problem(
-    contestId : json['contestId'] ?? 0,
-    index : json['index'],
-    name : json['name'] ?? '',
-    rating : json['rating'] ?? 0,
-    tags : json['tags'],
-    );
-  }
-}
-
-
-class Submission{
-  late int id, contestId;
-  late Problem problem;
-  late String verdict;
-
-  Submission(
-      {required this.id,
-      required this.contestId,
-      required this.problem,
-      required this.verdict,
-    });
-
-  factory Submission.fromJson(Map<String, dynamic> json) {
-    return Submission(
-      id: json['id'], 
-      contestId: json['contestId'] ?? 0, 
-      problem: Problem.fromJson(json['problem']),
-      // problem: json['problem'], 
-      verdict: json['verdict']
     );
   }
 }

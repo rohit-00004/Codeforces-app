@@ -1,3 +1,4 @@
+import 'package:codeforces_vis/models/problem_submission.dart';
 import 'package:codeforces_vis/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
