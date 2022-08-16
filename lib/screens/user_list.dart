@@ -68,8 +68,6 @@ class ActiveUsersList extends StatefulWidget {
 }
 
 class _ActiveUsersListState extends State<ActiveUsersList> {
-  // GlobalKey<_ActiveUsersListState> _myKey = GlobalKey();
-  
   late List<Cfuser> origList;
   Set<String> selectedHandles = {};
 
@@ -136,22 +134,27 @@ class _ActiveUsersListState extends State<ActiveUsersList> {
   }
 
   void addToFavorites(Cfuser user) {
-
     final userHere = Cfuser(
-      rating: user.rating, 
-      friends: user.friends,
-      maxrating: user.maxrating,
-      contribution: user.contribution,
-      handle: user.handle,
-      rank: user.rank,
-      maxrank: user.maxrank,
-      avatar: user.avatar,
-      country: user.country
-    );
+        rating: user.rating,
+        friends: user.friends,
+        maxrating: user.maxrating,
+        contribution: user.contribution,
+        handle: user.handle,
+        rank: user.rank,
+        maxrank: user.maxrank,
+        avatar: user.avatar,
+        country: user.country);
 
     final box = Hive.box<Cfuser>('FavoritesList');
-    box.add(userHere);
+    // box.add(userHere);
+    box.put(user.handle, userHere);
+  }
 
+  bool ispresent(String handle) {
+    final user = Hive.box<Cfuser>('FavoritesList').get('handle');
+
+    if (user == null) return false;
+    return true;
   }
 
   @override
@@ -271,12 +274,17 @@ class _ActiveUsersListState extends State<ActiveUsersList> {
                                         .contains(widget.users[index].handle)) {
                                       selectedHandles
                                           .remove(widget.users[index].handle);
+                                      final box =
+                                          Hive.box<Cfuser>('FavoritesList');
+                                      box.delete(widget.users[index].handle);
                                     } else {
-                                      selectedHandles
-                                          .add(widget.users[index].handle);
-                                    }
-                                    if(selectedHandles.contains(widget.users[index].handle) == true){
-                                      addToFavorites(widget.users[index]);
+                                      if (ispresent(
+                                              widget.users[index].handle) ==
+                                          false) {
+                                        addToFavorites(widget.users[index]);
+                                        selectedHandles
+                                            .add(widget.users[index].handle);
+                                      }
                                     }
                                   });
                                 },

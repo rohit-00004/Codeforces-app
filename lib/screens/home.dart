@@ -23,6 +23,25 @@ class _HomeState extends State<Home> {
     const Favorites(),
   ];
 
+  Color bgcolor(int i){
+    switch(i){
+      case 0:
+        return const Color(0xff20124d);
+      
+      case 1:
+        return const Color.fromARGB(255, 21, 132, 132);
+
+      case 2:
+        return const Color.fromARGB(255, 21, 132, 132);
+
+      case 3:
+        return const Color.fromARGB(255, 162, 146, 215);
+      
+      default: 
+        return Colors.white;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var sz = MediaQuery.of(context).size;
@@ -47,7 +66,8 @@ class _HomeState extends State<Home> {
             index: bottomIdx,
             height: 60,
             animationDuration: const Duration(milliseconds: 300),
-            backgroundColor: bottomIdx == 1 || bottomIdx == 2 ? const Color.fromARGB(255, 21, 132, 132) :const Color(0xff20124d),
+            backgroundColor: bottomIdx == 0 ? const Color(0xff20124d) : const Color.fromARGB(255, 21, 132, 132),
+            // backgroundColor: bgcolor(bottomIdx),
             
             onTap: (value) {
               // Respond to item press.
