@@ -62,7 +62,10 @@ class _FavoritesState extends State<Favorites> {
               itemCount: favusers.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                      leading: Text((index+1).toString()),
+                      leading: Text((index+1).toString(), 
+                                style: const TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.bold),
+                                ),
                         onTap: () {
                           Navigator.of(context)
                               .push(MaterialPageRoute(builder: ((context) {

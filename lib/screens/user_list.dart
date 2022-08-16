@@ -161,149 +161,159 @@ class _ActiveUsersListState extends State<ActiveUsersList> {
   Widget build(BuildContext context) {
     // sortUsers();
     var sz = MediaQuery.of(context).size;
-    return Column(
-      children: [
-        Container(
-          margin: EdgeInsets.only(
-              left: sz.width * .1, right: sz.width * .1, top: sz.width * .05),
-          padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-          height: sz.height * .1,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.black,
-              width: 1.5,
-            ),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: TextField(
-            onChanged: (value) {
-              searchresult(value);
-            },
-            decoration: const InputDecoration(
-                suffixIcon: Icon(Icons.search),
-                hintText: 'Search by name/country'),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Active users ranklist',
+          style: TextStyle(fontStyle: FontStyle.italic),
         ),
-        Expanded(
-          child: ListView.builder(
-              primary: false,
-              itemCount: widget.users.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  onTap: (() => Navigator.of(context)
-                          .push(MaterialPageRoute(builder: ((context) {
-                        return ShowUser(
-                          handle: widget.users[index].handle,
-                        );
-                      })))),
-                  leading: Text(
-                    (index + 1).toString(),
-                    style: const TextStyle(
-                        fontSize: 17, fontWeight: FontWeight.bold),
-                  ),
-                  title: widget.users[index].rank[0] == 'l' // legendary
-                      ? Row(
-                          children: [
-                            Text(widget.users[index].handle[0],
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            Text(widget.users[index].handle.substring(1),
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: choosecolor(widget.users[index].rank),
-                                )),
-                            Expanded(
-                              child: Text(
-                                '  ${widget.users[index].country}',
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                    fontSize: 14, fontStyle: FontStyle.italic),
-                              ),
-                            ),
-                          ],
-                        )
-                      : Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                widget.users[index].handle,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: choosecolor(widget.users[index].rank),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 76, 163, 163),
+      ),
+      body: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.only(
+                left: sz.width * .1, right: sz.width * .1, top: sz.width * .05),
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+            height: sz.height * .1,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.black,
+                width: 1.5,
+              ),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: TextField(
+              onChanged: (value) {
+                searchresult(value);
+              },
+              decoration: const InputDecoration(
+                  suffixIcon: Icon(Icons.search),
+                  hintText: 'Search by name/country'),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+                primary: false,
+                itemCount: widget.users.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    onTap: (() => Navigator.of(context)
+                            .push(MaterialPageRoute(builder: ((context) {
+                          return ShowUser(
+                            handle: widget.users[index].handle,
+                          );
+                        })))),
+                    leading: Text(
+                      (index + 1).toString(),
+                      style: const TextStyle(
+                          fontSize: 17, fontWeight: FontWeight.bold),
+                    ),
+                    title: widget.users[index].rank[0] == 'l' // legendary
+                        ? Row(
+                            children: [
+                              Text(widget.users[index].handle[0],
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              Text(widget.users[index].handle.substring(1),
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color:
+                                        choosecolor(widget.users[index].rank),
+                                  )),
+                              Expanded(
+                                child: Text(
+                                  '  ${widget.users[index].country}',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      fontStyle: FontStyle.italic),
                                 ),
                               ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                '  ${widget.users[index].country}',
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                    fontSize: 14, fontStyle: FontStyle.italic),
+                            ],
+                          )
+                        : Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  widget.users[index].handle,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color:
+                                        choosecolor(widget.users[index].rank),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  '  ${widget.users[index].country}',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      fontStyle: FontStyle.italic),
+                                ),
+                              ),
+                            ],
+                          ),
+                    trailing: SizedBox(
+                      width: 100,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              widget.users[index].rating.toString(),
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: choosecolor(widget.users[index].rank),
                               ),
                             ),
-                          ],
-                        ),
-                  trailing: SizedBox(
-                    width: 100,
-
-                    // decoration: BoxDecoration(
-                    //   border: Border.all(color: Colors.black)
-                    // ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            widget.users[index].rating.toString(),
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: choosecolor(widget.users[index].rank),
-                            ),
                           ),
-                        ),
-                        Expanded(
-                            child: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    if (selectedHandles
-                                        .contains(widget.users[index].handle)) {
-                                      selectedHandles
-                                          .remove(widget.users[index].handle);
-                                      final box =
-                                          Hive.box<Cfuser>('FavoritesList');
-                                      box.delete(widget.users[index].handle);
-                                    } else {
-                                      if (ispresent(
-                                              widget.users[index].handle) ==
-                                          false) {
-                                        addToFavorites(widget.users[index]);
+                          Expanded(
+                              child: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      if (selectedHandles.contains(
+                                          widget.users[index].handle)) {
                                         selectedHandles
-                                            .add(widget.users[index].handle);
+                                            .remove(widget.users[index].handle);
+                                        final box =
+                                            Hive.box<Cfuser>('FavoritesList');
+                                        box.delete(widget.users[index].handle);
+                                      } else {
+                                        if (ispresent(
+                                                widget.users[index].handle) ==
+                                            false) {
+                                          addToFavorites(widget.users[index]);
+                                          selectedHandles
+                                              .add(widget.users[index].handle);
+                                        }
                                       }
-                                    }
-                                  });
-                                },
-                                icon: selectedHandles
-                                        .contains(widget.users[index].handle)
-                                    ? Icon(
-                                        Icons.favorite,
-                                        color: Colors.amber[900],
-                                      )
-                                    : const Icon(
-                                        Icons.favorite_outline,
-                                      )))
-                      ],
+                                    });
+                                  },
+                                  icon: selectedHandles
+                                          .contains(widget.users[index].handle)
+                                      ? Icon(
+                                          Icons.favorite,
+                                          color: Colors.amber[900],
+                                        )
+                                      : const Icon(
+                                          Icons.favorite_outline,
+                                        )))
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              }),
-        ),
-      ],
+                  );
+                }),
+          ),
+        ],
+      ),
     );
   }
 }
